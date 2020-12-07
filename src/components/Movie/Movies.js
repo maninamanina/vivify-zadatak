@@ -1,28 +1,24 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import MovieList from './MovieList';
 import MovieService from '../../services/MovieService';
 
-export default class Movies extends Component {
-  state = {
-    movies: [],
-  };
+const Movies = () => {
+  const [movies, setMovies] = useState([]);
 
-  componentDidMount() {
-    this.setState(() => ({
-      movies: MovieService.getMovies(),
-    }));
-  }
+  useEffect(() => {
+    setMovies(MovieService.getMovies());
+  }, []);
 
-  render() {
-    return (
-      <div className="container-fluid" style={{ marginLeft: '-15px' }}>
-        <div className="d-flex flex-row">
-          <div className="col-sm-12">
-            <MovieList movies={this.state.movies} />
-          </div>
+  return (
+    <div className="container-fluid" style={{ marginLeft: '-15px' }}>
+      <div className="d-flex flex-row">
+        <div className="col-sm-12">
+          <MovieList movies={movies} />
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+export default Movies;
